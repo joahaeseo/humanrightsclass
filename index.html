@@ -285,76 +285,63 @@
 
 <script>
 // =========================================================
-// 사례 데이터 — 여기서 내용을 수정/추가할 수 있어요
+// [필수 수정] 나의 파이어베이스 설정 정보 입력하기
+// =========================================================
+const firebaseConfig = {
+  apiKey: "AIzaSyCorNeu2gW3UWkY_011A4g4B67BqY7YbjQ",
+  authDomain: "humanrightsclass.firebaseapp.com",
+  projectId: "humanrightsclass",
+  storageBucket: "humanrightsclass.firebasestorage.app",
+  messagingSenderId: "609928974600",
+  appId: "1:609928974600:web:0e63168408a41a80d1dcbd",
+  measurementId: "G-MF3WZRNP46",
+  databaseURL: "https://humanrightsclass-default-rtdb.firebaseio.com/"
+};
+
+// 파이어베이스 초기화
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+
+// =========================================================
+// 사례 데이터
 // =========================================================
 const CASES = [
-  {
-    id: 1, title: "공장 어린이 노동자", tag: "노동권", pill: "pill-danger",
+  { id: 1, title: "공장 어린이 노동자", tag: "노동권", pill: "pill-danger",
     prev: "19세기 영국 공장에서 일했던 아이들의 이야기",
     what: "19세기 영국 산업혁명 시기, 5~10세 어린이들이 하루 12~16시간씩 탄광과 방직 공장에서 일했습니다. 위험한 기계 옆에서 쉬지도 못하고 일해야 했으며, 제대로 된 임금도 받지 못했습니다.",
     why: "어린이에게는 교육받을 권리, 쉴 권리, 안전하게 생활할 권리가 있습니다. 이 어린이들은 이 모든 권리를 빼앗겼습니다. 유엔 아동권리협약은 어린이의 노동 착취를 명백한 인권 침해로 규정합니다.",
-    how: "영국에서는 시민들의 꾸준한 요구로 1833년 공장법이 제정되어 9세 미만 어린이의 고용이 금지되었습니다. 이후 의무교육법도 만들어졌습니다. 오늘날 국제노동기구(ILO)는 아동 노동 금지 협약을 통해 전 세계 어린이를 보호하고 있습니다."
-  },
-  {
-    id: 2, title: "버스 뒤편 강요 사건", tag: "평등권", pill: "pill-danger",
+    how: "영국에서는 시민들의 꾸준한 요구로 1833년 공장법이 제정되어 9세 미만 어린이의 고용이 금지되었습니다. 이후 의무교육법도 만들어졌습니다. 오늘날 국제노동기구(ILO)는 아동 노동 금지 협약을 통해 전 세계 어린이를 보호하고 있습니다." },
+  { id: 2, title: "버스 뒤편 강요 사건", tag: "평등권", pill: "pill-danger",
     prev: "1955년 미국에서 일어난 인종 차별 이야기",
     what: "1955년 미국 앨라배마주에서 흑인 여성 로자 파크스는 버스에서 백인 승객에게 자리를 양보하라는 요구를 거부했다가 체포되었습니다. 당시 법률은 흑인과 백인이 버스의 다른 구역에 앉도록 강제하고 있었습니다.",
     why: "피부색을 이유로 사람을 다르게 대우하는 것은 모든 사람이 평등하게 존중받을 권리를 침해합니다. 세계인권선언 제1조는 '모든 인간은 태어날 때부터 자유롭고 동등한 존엄성과 권리를 가진다'고 명시합니다.",
-    how: "이 사건은 381일간의 몽고메리 버스 보이콧 운동으로 이어졌습니다. 마틴 루터 킹 목사가 이 운동을 이끌었고, 결국 미국 대법원은 버스 내 인종 분리가 헌법에 위반된다고 판결했습니다."
-  },
-  {
-    id: 3, title: "말랄라의 교육권 투쟁", tag: "교육권", pill: "pill-warning",
+    how: "이 사건은 381일간의 몽고메리 버스 보이콧 운동으로 이어졌습니다. 마틴 루터 킹 목사가 이 운동을 이끌었고, 결국 미국 대법원은 버스 내 인종 분리가 헌법에 위반된다고 판결했습니다." },
+  { id: 3, title: "말랄라의 교육권 투쟁", tag: "교육권", pill: "pill-warning",
     prev: "학교 가는 것을 금지당한 파키스탄 소녀의 이야기",
     what: "2009년 파키스탄에서 탈레반은 여자 어린이들의 학교 출석을 금지했습니다. 당시 11살이었던 말랄라 유사프자이는 이에 굴하지 않고 계속 학교에 다녔고, 블로그와 인터뷰를 통해 여성 교육권을 알렸습니다. 2012년 탈레반은 학교 버스에서 말랄라에게 총을 쏘았습니다.",
     why: "교육은 모든 사람이 누려야 할 기본 권리입니다. 성별을 이유로 교육받을 기회를 빼앗는 것은 심각한 인권 침해입니다. 유엔 아동권리협약 제28조는 모든 어린이의 교육권을 보장합니다.",
-    how: "말랄라는 기적적으로 회복해 더 강하게 목소리를 높였습니다. 2013년 유엔에서 연설했고, 2014년 17세의 나이로 최연소 노벨평화상을 받았습니다. '말랄라 기금'을 세워 전 세계 여아 교육을 위해 활동하고 있습니다."
-  },
-  {
-    id: 4, title: "장애인 접근권 차별", tag: "접근권", pill: "pill-success",
+    how: "말랄라는 기적적으로 회복해 더 강하게 목소리를 높였습니다. 2013년 유엔에서 연설했고, 2014년 17세의 나이로 최연소 노벨평화상을 받았습니다. '말랄라 기금'을 세워 전 세계 여아 교육을 위해 활동하고 있습니다." },
+  { id: 4, title: "장애인 접근권 차별", tag: "접근권", pill: "pill-success",
     prev: "휠체어 사용자가 건물에 들어갈 수 없었던 이야기",
     what: "1970~80년대 미국에서 휠체어를 사용하는 장애인들은 계단만 있는 건물 때문에 관공서, 학교, 식당 등 많은 곳에 출입할 수 없었습니다. 장애인 권리 운동가들은 1990년 의회 건물 앞 계단을 기어오르는 퍼포먼스로 사회의 관심을 끌었습니다.",
     why: "장애가 있다는 이유로 공공장소에 접근하지 못하는 것은 이동의 자유, 평등권, 사회 참여의 권리를 침해합니다. 장애는 불편한 환경이 만드는 것이지 사람의 능력 문제가 아닙니다.",
-    how: "1990년 미국 장애인법(ADA)이 제정되어 모든 공공건물에 경사로, 엘리베이터, 장애인 화장실 설치가 의무화되었습니다. 한국에서도 1998년 장애인·노인·임산부 등의 편의증진 보장에 관한 법률이 만들어졌습니다."
-  },
-  {
-    id: 5, title: "나이를 이유로 한 취업 거부", tag: "나이 차별", pill: "pill-accent",
+    how: "1990년 미국 장애인법(ADA)이 제정되어 모든 공공건물에 경사로, 엘리베이터, 장애인 화장실 설치가 의무화되었습니다. 한국에서도 1998년 장애인·노인·임산부 등의 편의증진 보장에 관한 법률이 만들어졌습니다." },
+  { id: 5, title: "나이를 이유로 한 취업 거부", tag: "나이 차별", pill: "pill-accent",
     prev: "나이가 많다는 이유만으로 일할 기회를 빼앗긴 이야기",
     what: "많은 기업들이 구인 공고에 '35세 이하'처럼 나이 제한을 명시하거나, 면접에서 나이가 많다는 이유만으로 능력과 관계없이 탈락시키는 일이 빈번하게 일어났습니다. 한국에서도 50대 이상 구직자들이 이력서조차 검토받지 못하는 사례가 다수 보고되었습니다.",
     why: "일할 능력이 있음에도 나이만을 이유로 기회를 주지 않는 것은 평등권과 노동권을 침해합니다. 사람의 가치와 능력은 나이로 결정되지 않으며, 나이를 이유로 한 차별은 국제적으로도 인권 침해로 인정됩니다.",
-    how: "한국에서는 2009년 '고용상 연령차별 금지 및 고령자 고용 촉진에 관한 법률'이 강화되어 채용 공고에 나이 제한을 명시하는 것이 금지되었습니다. 미국, 유럽 등지에서도 유사한 법률이 존재하며, 능력 중심의 채용 문화를 확산시키기 위한 캠페인이 이어지고 있습니다."
-  },
-  {
-    id: 6, title: "외모를 이유로 한 따돌림", tag: "신체 차별", pill: "pill-pro",
+    how: "한국에서는 2009년 '고용상 연령차별 금지 및 고령자 고용 촉진에 관한 법률'이 강화되어 채용 공고에 나이 제한을 명시하는 것이 금지되었습니다. 미국, 유럽 등지에서도 유사한 법률이 존재하며, 능력 중심의 채용 문화를 확산시키기 위한 캠페인이 이어지고 있습니다." },
+  { id: 6, title: "외모를 이유로 한 따돌림", tag: "신체 차별", pill: "pill-pro",
     prev: "외모가 다르다는 이유로 차별받은 사람들의 이야기",
     what: "피부색이 다르거나, 키가 작거나, 몸무게가 많이 나가거나, 신체적 특징이 남들과 다르다는 이유로 학교나 직장에서 놀림, 따돌림, 부당한 대우를 받는 일이 세계 곳곳에서 일어납니다. 연구에서 외모로 인한 차별이 취업, 급여, 대인관계 전반에 영향을 미친다는 것이 확인되었습니다.",
     why: "사람의 외모는 스스로 선택한 것이 아닌 경우가 대부분이며, 외모를 이유로 사람을 다르게 대우하는 것은 인간의 존엄성과 평등권을 침해합니다. 모든 사람은 생김새와 관계없이 동등하게 존중받을 권리가 있습니다.",
-    how: "여러 나라에서 외모 차별 금지 조항을 법에 추가하는 논의가 이루어지고 있습니다. 학교에서는 외모 차별 예방 교육을 실시하고, 다양한 외모를 있는 그대로 존중하는 사회 분위기를 만들어가는 노력이 이어지고 있습니다."
-  }
+    how: "여러 나라에서 외모 차별 금지 조항을 법에 추가하는 논의가 이루어지고 있습니다. 학교에서는 외모 차별 예방 교육을 실시하고, 다양한 외모를 있는 그대로 존중하는 사회 분위기를 만들어가는 노력이 이어지고 있습니다." }
 ];
 
-// =========================================================
-// 비밀번호 — 여기서 변경하세요
-// =========================================================
 const TEACHER_PW = "0727";
-
-// =========================================================
-// 데이터 저장 (localStorage 사용 — 같은 기기/브라우저 내 유지)
-// =========================================================
-const STORAGE_KEY = "hr_posts_v1";
-
-function loadPosts() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); } catch { return []; }
-}
-function savePosts() {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(posts)); } catch {}
-}
-
-let posts = loadPosts();
+let posts = [];
 let unlocked = false;
 
-// =========================================================
-// 탭 전환
-// =========================================================
 function go(idx) {
   document.querySelectorAll(".tab").forEach((t, i) => t.classList.toggle("active", i === idx));
   document.querySelectorAll(".page").forEach((p, i) => p.classList.toggle("on", i === idx));
@@ -362,9 +349,6 @@ function go(idx) {
   if (idx === 3) renderTeacher();
 }
 
-// =========================================================
-// 사례 카드 & 상세
-// =========================================================
 function buildCaseOptions(selId, withAll) {
   const el = document.getElementById(selId);
   el.innerHTML = withAll ? "<option value=''>전체 사례</option>" : "<option value=''>사례를 선택하세요</option>";
@@ -396,9 +380,6 @@ function selectCase(id) {
   document.getElementById("caseSelect").value = id;
 }
 
-// =========================================================
-// 게시물 HTML
-// =========================================================
 function postHTML(p) {
   const c = CASES.find(x => x.id === p.caseId) || {};
   const pill = c.pill || "pill-accent";
@@ -418,9 +399,6 @@ function postHTML(p) {
   </div>`;
 }
 
-// =========================================================
-// 게시판 렌더링
-// =========================================================
 function renderBoard() {
   const filter = document.getElementById("filterCase").value;
   const filtered = filter ? posts.filter(p => p.caseId == filter) : posts;
@@ -429,9 +407,6 @@ function renderBoard() {
     : '<div class="empty">아직 올라온 의견이 없어요.<br>첫 번째로 의견을 남겨보세요!</div>';
 }
 
-// =========================================================
-// 교사 탭 렌더링
-// =========================================================
 function renderTeacher() {
   if (!unlocked) return;
   const total = posts.length;
@@ -446,9 +421,6 @@ function renderTeacher() {
     : '<div class="empty">아직 제출된 의견이 없습니다</div>';
 }
 
-// =========================================================
-// 비밀번호 확인
-// =========================================================
 function checkPw() {
   if (document.getElementById("pwInput").value === TEACHER_PW) {
     unlocked = true;
@@ -462,10 +434,9 @@ function checkPw() {
 }
 
 // =========================================================
-// 초기화
+// 초기화 및 파이어베이스 데이터 연동
 // =========================================================
 (function init() {
-  // 카드 생성
   const grid = document.getElementById("caseGrid");
   CASES.forEach(c => {
     const div = document.createElement("div");
@@ -479,15 +450,29 @@ function checkPw() {
   buildCaseOptions("caseSelect", false);
   buildCaseOptions("filterCase", true);
 
-  // 이벤트 연결
   document.getElementById("t0").addEventListener("click", () => go(0));
   document.getElementById("t1").addEventListener("click", () => go(1));
   document.getElementById("t2").addEventListener("click", () => go(2));
   document.getElementById("t3").addEventListener("click", () => go(3));
-
   document.getElementById("writeBtn").addEventListener("click", () => go(1));
   document.getElementById("filterCase").addEventListener("change", renderBoard);
 
+  // [수정] 데이터베이스에서 실시간으로 글 목록 가져오기
+  database.ref('posts').on('value', (snapshot) => {
+    const data = snapshot.val();
+    posts = [];
+    if (data) {
+      // 파이어베이스는 객체 형태로 저장되므로 배열로 변환 후 최신글 순 정렬
+      for (let key in data) {
+        posts.push(data[key]);
+      }
+      posts.sort((a, b) => new Date(b.time) - new Date(a.time));
+    }
+    renderBoard();
+    renderTeacher();
+  });
+
+  // [수정] 서버에 글 저장하기
   document.getElementById("submitBtn").addEventListener("click", () => {
     const caseId = parseInt(document.getElementById("caseSelect").value);
     const name   = document.getElementById("studentName").value.trim();
@@ -498,14 +483,22 @@ function checkPw() {
     if (!name)   { alert("이름을 입력해주세요"); return; }
     if (!a1 && !a2 && !a3) { alert("의견을 한 가지 이상 써주세요"); return; }
     const c = CASES.find(x => x.id === caseId);
-    posts.unshift({ caseId, caseTitle: c.title, name, a1, a2, a3, time: new Date().toISOString() });
-    savePosts();
-    document.getElementById("ans1").value = "";
-    document.getElementById("ans2").value = "";
-    document.getElementById("ans3").value = "";
-    const msg = document.getElementById("okMsg");
-    msg.style.display = "block";
-    setTimeout(() => msg.style.display = "none", 2500);
+    
+    const newPost = { caseId, caseTitle: c.title, name, a1, a2, a3, time: new Date().toISOString() };
+    
+    // 파이어베이스 서버의 'posts' 노드에 데이터 추가
+    database.ref('posts').push(newPost)
+      .then(() => {
+        document.getElementById("ans1").value = "";
+        document.getElementById("ans2").value = "";
+        document.getElementById("ans3").value = "";
+        const msg = document.getElementById("okMsg");
+        msg.style.display = "block";
+        setTimeout(() => msg.style.display = "none", 2500);
+      })
+      .catch((error) => {
+        alert("저장에 실패했습니다: " + error.message);
+      });
   });
 
   document.getElementById("pwBtn").addEventListener("click", checkPw);
@@ -519,15 +512,14 @@ function checkPw() {
     document.getElementById("pwErr").textContent = "";
   });
 
+  // [수정] 서버 전체 삭제 기능
   document.getElementById("clearBtn").addEventListener("click", () => {
-    if (!confirm("정말 전체 의견을 삭제할까요?")) return;
-    posts = [];
-    savePosts();
-    renderTeacher();
-    renderBoard();
+    if (!confirm("정말 전체 의견을 서버에서 삭제할까요?")) return;
+    database.ref('posts').remove()
+      .then(() => {
+        alert("모든 데이터가 삭제되었습니다.");
+      });
   });
-
-  renderBoard();
 })();
 </script>
 </body>
