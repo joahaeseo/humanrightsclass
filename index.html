@@ -311,7 +311,7 @@ const database = firebase.database();
 const CASES = [
   { id: 1, title: "공장 어린이 노동자", tag: "노동권", pill: "pill-danger",
     prev: "19세기 영국 공장에서 일했던 아이들의 이야기",
-    what: "19세기 영국 산업혁명 시기, 5~10세 어린이들이 하루 12~16시간씩 탄광과 방직 공장에서 일했습니다. 위험한 기계 옆에서 쉬지도 못하고 일해야 했으며, 제대로 된 임금도 받지 못했습니다.",
+    what: "19세기 영국 산업혁명 시기, 5~10세 어린이들이 하루 12~16시간씩 탄광 and 방직 공장에서 일했습니다. 위험한 기계 옆에서 쉬지도 못하고 일해야 했으며, 제대로 된 임금도 받지 못했습니다.",
     why: "어린이에게는 교육받을 권리, 쉴 권리, 안전하게 생활할 권리가 있습니다. 이 어린이들은 이 모든 권리를 빼앗겼습니다. 유엔 아동권리협약은 어린이의 노동 착취를 명백한 인권 침해로 규정합니다.",
     how: "영국에서는 시민들의 꾸준한 요구로 1833년 공장법이 제정되어 9세 미만 어린이의 고용이 금지되었습니다. 이후 의무교육법도 만들어졌습니다. 오늘날 국제노동기구(ILO)는 아동 노동 금지 협약을 통해 전 세계 어린이를 보호하고 있습니다." },
   { id: 2, title: "버스 뒤편 강요 사건", tag: "평등권", pill: "pill-danger",
@@ -460,12 +460,11 @@ function checkPw() {
   document.getElementById("writeBtn").addEventListener("click", () => go(1));
   document.getElementById("filterCase").addEventListener("change", renderBoard);
 
-  // [수정] 데이터베이스에서 실시간으로 글 목록 가져오기
+  // 데이터베이스에서 실시간으로 글 목록 가져오기
   database.ref('posts').on('value', (snapshot) => {
     const data = snapshot.val();
     posts = [];
     if (data) {
-      // 파이어베이스는 객체 형태로 저장되므로 배열로 변환 후 최신글 순 정렬
       for (let key in data) {
         posts.push(data[key]);
       }
@@ -475,7 +474,7 @@ function checkPw() {
     renderTeacher();
   });
 
-  // [수정] 서버에 글 저장하기
+  // 서버에 글 저장하기
   document.getElementById("submitBtn").addEventListener("click", () => {
     const caseId = parseInt(document.getElementById("caseSelect").value);
     const name   = document.getElementById("studentName").value.trim();
@@ -489,7 +488,6 @@ function checkPw() {
     
     const newPost = { caseId, caseTitle: c.title, name, a1, a2, a3, time: new Date().toISOString() };
     
-    // 파이어베이스 서버의 'posts' 노드에 데이터 추가
     database.ref('posts').push(newPost)
       .then(() => {
         document.getElementById("ans1").value = "";
@@ -515,7 +513,7 @@ function checkPw() {
     document.getElementById("pwErr").textContent = "";
   });
 
-  // [수정] 서버 전체 삭제 기능
+  // 서버 전체 삭제 기능
   document.getElementById("clearBtn").addEventListener("click", () => {
     if (!confirm("정말 전체 의견을 서버에서 삭제할까요?")) return;
     database.ref('posts').remove()
